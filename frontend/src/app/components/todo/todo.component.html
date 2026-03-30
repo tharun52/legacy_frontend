@@ -1,0 +1,90 @@
+<div>
+  <section class="section-input">
+    <form class="form-input" (ngSubmit)="onSubmit($event)">
+      <div class="inputs">
+        <input
+          class="textfield"
+          [(ngModel)]="newTodo.title"
+          name="title"
+          placeholder="Title"
+          autocomplete="off"
+        />
+        <textarea
+          [(ngModel)]="newTodo.description"
+          name="description"
+          placeholder="Take a note..."
+        ></textarea>
+      </div>
+
+      <div class="buttons">
+        <button
+          type="submit"
+          [disabled]="newTodo.title === ''"
+          *ngIf="!isUpdating"
+        >
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          Add
+        </button>
+
+        <button type="submit" *ngIf="isUpdating">
+          <i class="fa fa-edit" aria-hidden="true"></i>
+          Update
+        </button>
+
+        <button (click)="clear()">
+          <i class="fa fa-cut" aria-hidden="true"></i>
+          Clear
+        </button>
+      </div>
+      <!-- 
+      <div class="input-datetime">
+        <label for="datetime-label">Choose a time for schedule:</label>
+
+        <input
+          type="datetime-local"
+          id="meeting-time"
+          name="meeting-time"
+          value="2025-01-01T00:00"
+          min="2020-01-01T00:00"
+          max="2025-12-30T00:00"
+          ng-model="rootFolders"
+          ng-init="rootFolders='Bob'"
+        />
+      </div> -->
+    </form>
+  </section>
+  <section class="section-result">
+    <div class="empty-list" *ngIf="todos.length === 0">
+      <span aria-hidden="true">
+        <i class="fa fa-list-ol fa-5x" style="color:lightgray"></i>
+      </span>
+    </div>
+    <div *ngFor="let todo of todos.slice().reverse(); let i = index">
+      <div class="todo-item" [ngClass]="{ highlight: updatingItemIndex === i }">
+        <div class="todo-content">
+          <div class="todo-heading">
+            <input
+              type="checkbox"
+              class="checkbox"
+              (change)="updateTodo()"
+              [(ngModel)]="todo.completed"
+            />
+            <h3 class="todo-title">{{ todo.title }}</h3>
+          </div>
+          <p class="todo-description">{{ todo.description }}</p>
+          <div class="footer">
+            <div class="date">{{ todo.created_at | date: "MMM dd" }}</div>
+            <div class="icons">
+              <span (click)="editTodo(todo, i)" aria-hidden="true">
+                <i class="fa fa-edit"></i>
+              </span>
+              <span (click)="deleteTodo(todo)" aria-hidden="true">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
