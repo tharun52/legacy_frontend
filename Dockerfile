@@ -2,12 +2,12 @@
 FROM node:20-alpine AS build
 WORKDIR /app
 
-# Install dependencies first (maximises layer cache reuse)
-# --legacy-peer-deps is required because the package-lock.json was generated
-# with Angular 9. Once a fresh lockfile is committed after the Angular 18
-# migration, this flag can be removed.
-COPY package.json package-lock.json ./
-RUN npm ci --legacy-peer-deps
+# Copy package.json only — use npm install instead of npm ci because the
+# existing package-lock.json was generated with Angular 9 and is incompatible
+# with Angular 18. npm install regenerates the dependency tree from package.json.
+# Once a fresh lockfile is committed post-migration, switch back to npm ci.
+COPY package.json ./
+RUN npm install --legacy-peer-deps
 
 # Copy source and build for production
 COPY . .
