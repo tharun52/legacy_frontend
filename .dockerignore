@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Git
+.git/
+.gitignore
+
+# CI/CD
+.github/
+
+# Docs & scripts
+README.md
+deploy.sh
+blog-frontend.service
+
+# Test artifacts
+coverage/
+e2e/
+
+# IDE
+.vscode/
+.idea/
+*.user
