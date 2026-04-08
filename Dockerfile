@@ -3,8 +3,11 @@ FROM node:20-alpine AS build
 WORKDIR /app
 
 # Install dependencies first (maximises layer cache reuse)
+# --legacy-peer-deps is required because the package-lock.json was generated
+# with Angular 9. Once a fresh lockfile is committed after the Angular 18
+# migration, this flag can be removed.
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 # Copy source and build for production
 COPY . .
