@@ -1,0 +1,38 @@
+<div class="post-detail">
+  <button class="btn btn-back" (click)="back.emit()">← Back to Posts</button>
+
+  <div class="post-full">
+    <div class="post-full-header">
+      <h1>{{ post.title }}</h1>
+      <div class="post-actions">
+        <button class="btn btn-edit" (click)="edit.emit(post)">Edit</button>
+        <button class="btn btn-danger" (click)="deleted.emit(post.id)">Delete</button>
+      </div>
+    </div>
+    <div class="post-meta">
+      <span>By <strong>{{ post.author }}</strong></span>
+      <span>{{ post.createdAt | date:'medium' }}</span>
+    </div>
+    <div class="post-body">{{ post.content }}</div>
+  </div>
+
+  <div class="comments-section">
+    <h3>Comments ({{ comments.length }})</h3>
+
+    <div class="comment" *ngFor="let comment of comments">
+      <div class="comment-header">
+        <strong>{{ comment.author }}</strong>
+        <span>{{ comment.createdAt | date:'short' }}</span>
+        <button class="btn-remove" (click)="removeComment(comment.id)">×</button>
+      </div>
+      <p>{{ comment.content }}</p>
+    </div>
+
+    <div class="add-comment">
+      <h4>Add a Comment</h4>
+      <input type="text" [(ngModel)]="newComment.author" placeholder="Your name (optional)" class="form-input" />
+      <textarea [(ngModel)]="newComment.content" placeholder="Write a comment..." rows="3" class="form-input"></textarea>
+      <button class="btn btn-primary" (click)="addComment()">Post Comment</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h2>Register</h2>
+    <div class="error-msg" *ngIf="error">{{ error }}</div>
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" [(ngModel)]="username" class="form-input" placeholder="Choose a username" />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" [(ngModel)]="password" class="form-input" placeholder="Choose a password" />
+    </div>
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <input type="password" [(ngModel)]="confirmPassword" class="form-input" placeholder="Confirm your password" (keyup.enter)="register()" />
+    </div>
+    <button class="btn btn-primary btn-full" (click)="register()" [disabled]="loading">
+      {{ loading ? 'Registering...' : 'Register' }}
+    </button>
+    <p class="auth-link">Already have an account? <a routerLink="/login">Login</a></p>
+  </div>
+</div>

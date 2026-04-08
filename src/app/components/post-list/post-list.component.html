@@ -1,0 +1,47 @@
+<div class="blog-container">
+  <header class="blog-header">
+    <h2>Posts</h2>
+    <button class="btn btn-primary" (click)="openCreateForm()">+ New Post</button>
+  </header>
+
+  <div class="blog-content">
+    <!-- Post Form -->
+    <app-post-form
+      *ngIf="showForm"
+      [post]="editPost"
+      (saved)="onPostSaved()"
+      (cancelled)="onCancel()">
+    </app-post-form>
+
+    <!-- Post Detail -->
+    <app-post-detail
+      *ngIf="selectedPost && !showForm"
+      [post]="selectedPost"
+      (edit)="openEditForm($event)"
+      (deleted)="deletePost($event)"
+      (back)="selectedPost = null">
+    </app-post-detail>
+
+    <!-- Post List -->
+    <div *ngIf="!selectedPost && !showForm">
+      <div *ngIf="posts.length === 0" class="empty-state">
+        <p>No posts yet. Be the first to write something!</p>
+      </div>
+
+      <div class="post-card" *ngFor="let post of posts" (click)="selectPost(post)">
+        <div class="post-card-header">
+          <h2>{{ post.title }}</h2>
+          <div class="post-actions" (click)="$event.stopPropagation()">
+            <button class="btn btn-sm btn-edit" (click)="openEditForm(post)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deletePost(post.id)">Delete</button>
+          </div>
+        </div>
+        <p class="post-excerpt">{{ post.content | slice:0:150 }}{{ post.content.length > 150 ? '...' : '' }}</p>
+        <div class="post-meta">
+          <span>By {{ post.author }}</span>
+          <span>{{ post.createdAt | date:'mediumDate' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

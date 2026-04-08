@@ -1,0 +1,16 @@
+[Unit]
+Description=Blog Frontend - Nginx
+After=network.target
+
+[Service]
+Type=forking
+ExecStartPre=/usr/sbin/nginx -t
+ExecStart=/usr/sbin/nginx
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+Restart=always
+RestartSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,9 @@
+<nav class="navbar" *ngIf="authService.isLoggedIn()">
+  <span class="nav-brand">My Blog</span>
+  <div class="nav-right">
+    <span class="nav-user">{{ authService.getUsername() }}</span>
+    <button class="btn-logout" (click)="logout()">Logout</button>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
